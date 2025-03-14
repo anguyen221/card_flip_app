@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'game_screen.dart';
 
 void main() {
   runApp(const CardMatchingApp());
@@ -15,20 +16,6 @@ class CardMatchingApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const GameScreen(),
-    );
-  }
-}
-
-class GameScreen extends StatelessWidget {
-  const GameScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Card Matching Game")),
-      body: const Center(
-        child: Text("Game Screen"),
-      ),
     );
   }
 }
