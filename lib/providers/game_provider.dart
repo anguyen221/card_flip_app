@@ -5,9 +5,14 @@ class GameProvider extends ChangeNotifier {
   List<CardModel> cards = [];
   int? firstFlippedIndex;
   bool isChecking = false;
+  BuildContext? _context;
 
   GameProvider() {
     _initializeCards();
+  }
+
+  void setContext(BuildContext context) {
+    _context = context;
   }
 
   void _initializeCards() {
@@ -51,7 +56,7 @@ class GameProvider extends ChangeNotifier {
       cards[secondIndex].isMatched = true;
       isChecking = false;
       if (checkWin()) {
-        debugPrint("Test win");
+        _showWinDialog();
       }
     } else {
       Future.delayed(const Duration(milliseconds: 1000), () {
@@ -68,5 +73,31 @@ class GameProvider extends ChangeNotifier {
 
   bool checkWin() {
     return cards.every((card) => card.isMatched);
+  }
+
+  void _showWinDialog() {
+    if (_context == null) return;
+
+    Future.delayed(const Duration(milliseconds: 300), () {
+      showDialog(
+        context: _context!,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("You won!"),
+            content: const Text("Good job on matching all the cards!"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _initializeCards();
+                  notifyListeners();
+                },
+                child: const Text("Play Again"),
+              ),
+            ],
+          );
+        },
+      );
+    });
   }
 }

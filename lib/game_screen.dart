@@ -8,6 +8,7 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<GameProvider>().setContext(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Card Matching Game")),
       body: Consumer<GameProvider>(
